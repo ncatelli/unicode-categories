@@ -1,6 +1,7 @@
-//include!(concat!(env!("OUT_DIR"), "/unicode_mappings.rs"));
+include!(concat!(env!("OUT_DIR"), "/unicode_mappings.rs"));
 
 /// A unicode general category
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Category {
     // Leters
     Lu,
@@ -79,7 +80,7 @@ impl Category {
     fn as_str(&self) -> &str {
         match self {
             Self::Lu => "Lu",
-            Self::Ll => "Lt",
+            Self::Ll => "Ll",
             Self::Lt => "Lt",
             Self::Lm => "Lm",
             Self::Lo => "Lo",
@@ -143,7 +144,8 @@ impl From<HumanReadableCategory> for Category {
     }
 }
 
-/// A unicode general category in a more human readable format
+/// A unicode general category in a more human readable format.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum HumanReadableCategory {
     // Leters
     /// `Lu`
@@ -246,11 +248,8 @@ impl From<Category> for HumanReadableCategory {
     }
 }
 
-/*
 pub fn unicode_category_from_char(c: char) -> Option<Category> {
-    let category_str = unicode_category_str_from_char(c);
-
-    Category::from_category_str(category_str)
+    unicode_category_str_from_char(c).and_then(Category::from_category_str)
 }
 
 #[cfg(test)]
@@ -264,16 +263,15 @@ mod tests {
         let lower = 'a';
         let lower_cat = unicode_category_from_char(lower);
 
-        assert!(Some(Category::Lu), upper_cat);
-        assert!(
+        assert_eq!(Some(Category::Lu), upper_cat);
+        assert_eq!(
             Some(HumanReadableCategory::LetterUppercase),
-            upper_cat.map(|cat| HumanReadableCategory::from(cat))
+            upper_cat.map(HumanReadableCategory::from)
         );
-        assert!(Some(Category::Ll), lower_cat);
-        assert!(
+        assert_eq!(Some(Category::Ll), lower_cat);
+        assert_eq!(
             Some(HumanReadableCategory::LetterLowercase),
-            lower_cat.map(|cat| HumanReadableCategory::from(cat))
+            lower_cat.map(HumanReadableCategory::from)
         );
     }
 }
-*/

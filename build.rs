@@ -6,7 +6,7 @@ use std::io::{BufRead, BufReader};
 use std::path::Path;
 
 /// A unicode general category
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Category {
     // Leters
     Lu,
@@ -85,7 +85,7 @@ impl Category {
     fn as_str(&self) -> &str {
         match self {
             Self::Lu => "Lu",
-            Self::Ll => "Lt",
+            Self::Ll => "Ll",
             Self::Lt => "Lt",
             Self::Lm => "Lm",
             Self::Lo => "Lo",
@@ -167,16 +167,57 @@ fn generate_char_to_category(mappings: &[UnicodeMapping]) -> String {
     let preamble = "fn unicode_category_str_from_char(c: char) -> Option<&'static str> {
     let c  = c as u32;
     match c {\n";
-    let postamble = "
-        _ => None,    
+    let postamble = "       _ => None,    
     }
 }";
 
-    let mappings = mappings.iter().map(|mapping| {
+    let mut peekable_mappings = mappings.iter().peekable();
+    let mut sos: u32 = peekable_mappings
+        .peek()
+        .map(|mapping| mapping.character)
+        .unwrap_or(0);
+
+    let mut sequences = vec![];
+
+    loop {
+        let mapping = peekable_mappings.next();
+        let next = peekable_mappings.peek();
+
+        match (mapping, next) {
+            (None, _) => break,
+            // increment eos if the mapping is a sequence matches
+            (Some(mapping), Some(next))
+                if next.character == (mapping.character + 1)
+                    && next.category == mapping.category =>
+            {
+                continue;
+            }
+            (Some(mapping), Some(next)) => {
+                let start = sos;
+                let end = mapping.character;
+                let category = mapping.category;
+
+                // set the next sequence elements bounds
+                sos = next.character;
+
+                sequences.push((start, end, category))
+            }
+            (Some(mapping), None) => {
+                let start = sos;
+                let end = mapping.character;
+                let category = mapping.category;
+
+                sequences.push((start, end, category))
+            }
+        }
+    }
+
+    let mappings = sequences.iter().map(|(start, end, category)| {
         format!(
-            "{} => Some(\"{}\"),\n",
-            mapping.character,
-            mapping.category.as_str()
+            "       {}..={} => Some(\"{}\"),\n",
+            start,
+            end,
+            category.as_str()
         )
     });
 
