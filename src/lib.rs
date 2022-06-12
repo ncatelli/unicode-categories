@@ -44,7 +44,7 @@ pub enum Category {
 }
 
 impl Category {
-    fn from_category_str<S: AsRef<str>>(category: S) -> Option<Self> {
+    pub fn from_category_str<S: AsRef<str>>(category: S) -> Option<Self> {
         match category.as_ref() {
             "Lu" => Some(Self::Lu),
             "Ll" => Some(Self::Ll),
@@ -77,7 +77,7 @@ impl Category {
         }
     }
 
-    fn as_str(&self) -> &str {
+    pub fn as_str(&self) -> &str {
         match self {
             Self::Lu => "Lu",
             Self::Ll => "Ll",
@@ -141,6 +141,12 @@ impl From<HumanReadableCategory> for Category {
             HumanReadableCategory::OtherPrivateUse => Self::Co,
             HumanReadableCategory::OtherNotAssigned => Self::Cn,
         }
+    }
+}
+
+impl std::fmt::Display for Category {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.as_str())
     }
 }
 
