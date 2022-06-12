@@ -1,6 +1,6 @@
 include!(concat!(env!("OUT_DIR"), "/unicode_mappings.rs"));
 
-/// A unicode general category
+/// A unicode general category.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Category {
     // Leters
@@ -150,7 +150,7 @@ impl std::fmt::Display for Category {
     }
 }
 
-/// A unicode general category in a more human readable format.
+/// A unicode general category in a more human-readable format.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum HumanReadableCategory {
     // Leters
@@ -254,6 +254,9 @@ impl From<Category> for HumanReadableCategory {
     }
 }
 
+/// Generates a corresponding general unicode category for a provide char. If
+/// the character isn't a member of a general category, `Option::None` is
+/// returned.
 pub fn unicode_category_from_char(c: char) -> Option<Category> {
     unicode_category_str_from_char(c).and_then(Category::from_category_str)
 }
