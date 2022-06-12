@@ -1,5 +1,27 @@
 include!(concat!(env!("OUT_DIR"), "/unicode_mappings.rs"));
 
+/// Provides extention methods to allow `char` to optionally return it's
+/// associated unicode category.
+pub trait UnicodeCategorizable {
+    fn unicode_category(&self) -> Option<Category>;
+}
+
+impl UnicodeCategorizable for char {
+    /// Returns a `char`'s corresponding general unicode category or returns none.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use unicode_categories::*;
+    ///
+    /// assert_eq!(Some(Category::Lu), 'A'.unicode_category());
+    /// assert_eq!(Some(Category::Ll), 'a'.unicode_category());
+    /// ```
+    fn unicode_category(&self) -> Option<Category> {
+        unicode_category_from_char(*self)
+    }
+}
+
 /// A unicode general category.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Category {
@@ -257,6 +279,15 @@ impl From<Category> for HumanReadableCategory {
 /// Generates a corresponding general unicode category for a provide char. If
 /// the character isn't a member of a general category, `Option::None` is
 /// returned.
+///
+/// # Example
+///
+/// ```
+/// use unicode_categories::*;
+///
+/// assert_eq!(Some(Category::Lu), unicode_category_from_char('A'));
+/// assert_eq!(Some(Category::Ll), unicode_category_from_char('a'));
+/// ```
 pub fn unicode_category_from_char(c: char) -> Option<Category> {
     unicode_category_str_from_char(c).and_then(Category::from_category_str)
 }
@@ -282,5 +313,11 @@ mod tests {
             Some(HumanReadableCategory::LetterLowercase),
             lower_cat.map(HumanReadableCategory::from)
         );
+    }
+
+    #[test]
+    fn should_map_letter_category_for_extention_trait() {
+        assert_eq!(Some(Category::Lu), 'A'.unicode_category());
+        assert_eq!(Some(Category::Ll), 'a'.unicode_category());
     }
 }
