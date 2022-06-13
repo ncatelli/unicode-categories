@@ -1,3 +1,27 @@
+//! This crate provides a method and Extension Trait on top of the `char` type
+//! for returning a corresponding Unicode General Category as defined in the
+//! [latest standard](https://www.unicode.org/versions/Unicode14.0.0/UnicodeStandard-14.0.pdf).
+//!
+//! # Examples
+//!
+//! Using the `char` type extension trait.
+//!
+//! ```
+//! use unicode_categories::UnicodeCategorizable;
+//!
+//! assert_eq!(Some(Category::Lu), 'A'.unicode_category());
+//! assert_eq!(Some(Category::Ll), 'a'.unicode_category());
+//! ```
+//!
+//! Using the include conversion method:
+//!
+//! ```
+//! use unicode_categories::unicode_category_from_char;
+//!
+//! assert_eq!(Some(Category::Lu), unicode_category_from_char('A'));
+//! assert_eq!(Some(Category::Ll), unicode_category_from_char('a'));
+//! ```
+
 include!(concat!(env!("OUT_DIR"), "/unicode_mappings.rs"));
 
 /// Provides extention methods to allow `char` to optionally return it's
