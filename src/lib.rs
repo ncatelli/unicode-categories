@@ -7,7 +7,7 @@
 //! Using the `char` type extension trait.
 //!
 //! ```
-//! use unicode_categories::UnicodeCategorizable;
+//! use unicode_categories::*;
 //!
 //! assert_eq!(Some(Category::Lu), 'A'.unicode_category());
 //! assert_eq!(Some(Category::Ll), 'a'.unicode_category());
@@ -16,7 +16,7 @@
 //! Using the include conversion method:
 //!
 //! ```
-//! use unicode_categories::unicode_category_from_char;
+//! use unicode_categories::*;
 //!
 //! assert_eq!(Some(Category::Lu), unicode_category_from_char('A'));
 //! assert_eq!(Some(Category::Ll), unicode_category_from_char('a'));
