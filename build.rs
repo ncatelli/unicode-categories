@@ -20,6 +20,11 @@ enum Category {
     Mc,
     Me,
 
+    // Number
+    Nd,
+    Nl,
+    No,
+
     // Punctuation
     Pc,
     Pd,
@@ -59,6 +64,9 @@ impl Category {
             "Mn" => Some(Self::Mn),
             "Mc" => Some(Self::Mc),
             "Me" => Some(Self::Me),
+            "Nd" => Some(Self::Nd),
+            "Nl" => Some(Self::Nl),
+            "No" => Some(Self::No),
             "Pc" => Some(Self::Pc),
             "Pd" => Some(Self::Pd),
             "Ps" => Some(Self::Ps),
@@ -92,6 +100,9 @@ impl Category {
             Self::Mn => "Mn",
             Self::Mc => "Mc",
             Self::Me => "Me",
+            Self::Nd => "Nd",
+            Self::Nl => "Nl",
+            Self::No => "No",
             Self::Pc => "Pc",
             Self::Pd => "Pd",
             Self::Ps => "Ps",

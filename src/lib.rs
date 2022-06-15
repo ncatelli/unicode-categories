@@ -61,6 +61,11 @@ pub enum Category {
     Mc,
     Me,
 
+    // Number
+    Nd,
+    Nl,
+    No,
+
     // Punctuation
     Pc,
     Pd,
@@ -100,6 +105,9 @@ impl Category {
             "Mn" => Some(Self::Mn),
             "Mc" => Some(Self::Mc),
             "Me" => Some(Self::Me),
+            "Nd" => Some(Self::Nd),
+            "Nl" => Some(Self::Nl),
+            "No" => Some(Self::No),
             "Pc" => Some(Self::Pc),
             "Pd" => Some(Self::Pd),
             "Ps" => Some(Self::Ps),
@@ -133,6 +141,9 @@ impl Category {
             Self::Mn => "Mn",
             Self::Mc => "Mc",
             Self::Me => "Me",
+            Self::Nd => "Nd",
+            Self::Nl => "Nl",
+            Self::No => "No",
             Self::Pc => "Pc",
             Self::Pd => "Pd",
             Self::Ps => "Ps",
@@ -167,6 +178,9 @@ impl From<HumanReadableCategory> for Category {
             HumanReadableCategory::MarkNonspacing => Self::Mn,
             HumanReadableCategory::MarkSpacingCombining => Self::Mc,
             HumanReadableCategory::MarkEnclosing => Self::Me,
+            HumanReadableCategory::NumberDecimalDigit => Self::Nd,
+            HumanReadableCategory::NumberLetter => Self::Nl,
+            HumanReadableCategory::NumberOther => Self::No,
             HumanReadableCategory::PunctuationConnector => Self::Pc,
             HumanReadableCategory::PunctuationDash => Self::Pd,
             HumanReadableCategory::PunctuationOpen => Self::Ps,
@@ -218,6 +232,14 @@ pub enum HumanReadableCategory {
     MarkSpacingCombining,
     /// `Me`
     MarkEnclosing,
+
+    // Number
+    /// `Nd`
+    NumberDecimalDigit,
+    /// `Nl`
+    NumberLetter,
+    /// `No`
+    NumberOther,
 
     // Punctuation
     /// `Pc`
@@ -277,6 +299,9 @@ impl From<Category> for HumanReadableCategory {
             Category::Mn => Self::MarkNonspacing,
             Category::Mc => Self::MarkSpacingCombining,
             Category::Me => Self::MarkEnclosing,
+            Category::Nd => Self::NumberDecimalDigit,
+            Category::Nl => Self::NumberLetter,
+            Category::No => Self::NumberOther,
             Category::Pc => Self::PunctuationConnector,
             Category::Pd => Self::PunctuationDash,
             Category::Ps => Self::PunctuationOpen,
@@ -343,5 +368,10 @@ mod tests {
     fn should_map_letter_category_for_extention_trait() {
         assert_eq!(Some(Category::Lu), 'A'.unicode_category());
         assert_eq!(Some(Category::Ll), 'a'.unicode_category());
+    }
+
+    #[test]
+    fn should_map_numeric_category_to_extention_trait() {
+        assert_eq!(Some(Category::Nd), '0'.unicode_category());
     }
 }
