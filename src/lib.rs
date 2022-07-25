@@ -49,7 +49,7 @@ impl UnicodeCategorizable for char {
 /// A unicode general category.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Category {
-    // Leters
+    // Letters
     Lu,
     Ll,
     Lt,
