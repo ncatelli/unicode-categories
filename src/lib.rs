@@ -1,6 +1,6 @@
 //! This crate provides a method and Extension Trait on top of the `char` type
 //! for returning a corresponding Unicode General Category as defined in the
-//! [latest standard](https://www.unicode.org/versions/Unicode14.0.0/UnicodeStandard-14.0.pdf).
+//! [latest standard](https://www.unicode.org/versions/Unicode15.0.0/UnicodeStandard-15.0.pdf).
 //!
 //! # Examples
 //!
