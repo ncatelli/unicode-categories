@@ -13,7 +13,7 @@
 //! assert_eq!(Some(Category::Ll), 'a'.unicode_category());
 //! ```
 //!
-//! Using the include conversion method:
+//! Using the included conversion method:
 //!
 //! ```
 //! use unicode_categories::*;
