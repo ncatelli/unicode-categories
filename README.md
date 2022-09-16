@@ -22,7 +22,7 @@ assert_eq!(Some(Category::Lu), 'A'.unicode_category());
 assert_eq!(Some(Category::Ll), 'a'.unicode_category());
 ```
 
-Using the include conversion method:
+Using the included conversion method:
 
 ```rust
 use unicode_categories::*;
