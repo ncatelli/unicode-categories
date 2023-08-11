@@ -8,7 +8,7 @@ For now the crate can be included by branch or by tag via git.
 
 ```toml
 #[dependencies]
-unicode-categories = { git = "https://github.com/ncatelli/unicode_categories", branch = "main" }
+unicode-categories = { git = "https://github.com/ncatelli/unicode-categories.git", branch = "main" }
 ```
 
 ## Examples
